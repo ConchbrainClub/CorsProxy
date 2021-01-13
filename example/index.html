@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CorsProxy</title>
+</head>
+<body>
+
+    <pre id="code">
+    fetch("https://cors.conchbrain.workers.dev?https://www.baidu.com/").then((res)=>{
+        res.text().then((data)=>{
+            document.body.innerHTML = data;
+        });
+    });
+    </pre>
+
+    <button id="btn" onclick="runCode()">RUN</button>
+
+    <script>
+        function runCode() {
+            eval(document.querySelector('#code').innerText)
+            let btn = document.querySelector("#btn");
+            btn.setAttribute("disabled","disabled");
+            btn.innerText = "Loading....";
+        }
+    </script>
+
+</body>
+</html>
