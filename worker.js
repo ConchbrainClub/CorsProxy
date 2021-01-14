@@ -7,12 +7,11 @@ async function handleRequest(request) {
     let para = new URL(request.url).search.replace("?","");
     let url = unescape(para);
 
-    let body = undefined;
+    let body = await request.text();
 
-    try{
-        body = await request.text();
+    if(!body){
+        body = undefined;
     }
-    catch(err){}
 
     if(isUrl(url)){
         let response =  await fetch(url, {
