@@ -14,8 +14,6 @@ async function handleRequest(request) {
     }
     catch(err){}
 
-    console.log(body);
-
     if(isUrl(url)){
         let response =  await fetch(url, {
             method: request.method,
