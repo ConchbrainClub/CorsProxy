@@ -8,11 +8,13 @@ async function handleRequest(request) {
     let url = unescape(para);
 
     let body = undefined;
-    
+
     try{
-        body = await readRequestBody(request);
+        body = await request.text();
     }
     catch(err){}
+
+    console.log(body);
 
     if(isUrl(url)){
         let response =  await fetch(url, {
@@ -48,32 +50,4 @@ async function handleRequest(request) {
 function isUrl(href){
     var reg = /^((http|https):\/\/)?(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\.)+([A-Za-z]+)[/\?\:]?.*$/;
     return reg.test(href);
-}
-
-async function readRequestBody(request) {
-    const { headers } = request
-    const contentType = headers.get("content-type") || ""
-
-    if (contentType.includes("application/json")) {
-        return JSON.stringify(await request.json())
-    }
-    else if (contentType.includes("application/text")) {
-        return await request.text()
-    }
-    else if (contentType.includes("text/html")) {
-        return await request.text()
-    }
-    else if (contentType.includes("form")) {
-        const formData = await request.formData()
-        const body = {}
-        for (const entry of formData.entries()) {
-            body[entry[0]] = entry[1]
-        }
-        return JSON.stringify(body)
-    }
-    else {
-        const myBlob = await request.blob()
-        const objectURL = URL.createObjectURL(myBlob)
-        return objectURL
-    }
 }
