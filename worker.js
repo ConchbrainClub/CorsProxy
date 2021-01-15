@@ -34,7 +34,7 @@ async function handleRequest(request) {
     return new Response(`
         <div style="text-align:center; margin-top: 100px;">
             <p>Welcome to ConchBrain CORS Proxy</p>
-            <p>Please read the <a href="https://conchbrain.club/#cors" target="_blank">documentation</a></p>
+            <p>Please read the <a href="https://www.conchbrain.club/#corsproxy" target="_blank">documentation</a></p>
         </div>
     `,{
         status: 200,
