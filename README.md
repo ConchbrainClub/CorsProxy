@@ -6,7 +6,7 @@ Cross-origin Resource Sharing Proxy Service
 
 ## Usage
 
-Api: https://www.conchbrain.club/cors
+Api: https://cors.conchbrain.club
 
 Method: GET
 
@@ -29,7 +29,7 @@ fetch("https://www.conchbrain.club/").then((res)=>{
 #### UseProxy
 
 ```shell
-fetch("https://www.conchbrain.club/cors?https://www.conchbrain.club/").then((res)=>{
+fetch("https://cors.conchbrain.club?https://www.conchbrain.club/").then((res)=>{
     res.text().then((data)=>{
         console.log(data);
     });
