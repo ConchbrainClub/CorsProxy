@@ -3,24 +3,24 @@ addEventListener('fetch', event => {
 })
 
 async function handleRequest(request) {
-    
-    let para = new URL(request.url).search.replace("?","");
+
+    let para = new URL(request.url).search.replace("?", "");
     let url = unescape(para);
 
     let body = await request.text();
 
-    if(!body){
+    if (!body) {
         body = undefined;
     }
 
-    if(isUrl(url)){
-        let response =  await fetch(url, {
+    if (isUrl(url)) {
+        let response = await fetch(url, {
             method: request.method,
             body: body,
             headers: request.headers
         });
 
-        return new Response(response.body,{
+        return new Response(response.body, {
             status: 200,
             headers: {
                 "content-type": response.headers.get("content-type"),
@@ -36,7 +36,7 @@ async function handleRequest(request) {
             <p>Welcome to ConchBrain CORS Proxy</p>
             <p>Please read the <a href="https://www.conchbrain.club/#corsproxy" target="_blank">documentation</a></p>
         </div>
-    `,{
+    `, {
         status: 200,
         headers: {
             "content-type": "text/html; charset=utf-8"
@@ -44,7 +44,7 @@ async function handleRequest(request) {
     });
 }
 
-function isUrl(href){
+function isUrl(href) {
     var reg = /^((http|https):\/\/)?(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\.)+([A-Za-z]+)[/\?\:]?.*$/;
     return reg.test(href);
 }
