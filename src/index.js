@@ -15,7 +15,7 @@ async function handleRequest(request) {
         `, {
             status: 200,
             headers: {
-                "content-type": "text/html charset=utf-8"
+                'Content-Type': 'text/html charset=utf-8'
             }
         })
     }
@@ -27,14 +27,33 @@ async function handleRequest(request) {
         body: body ? body : undefined,
         headers: request.headers
     })
-
-    return new Response(response.body, {
-        status: response.status,
-        headers: {
-                "content-type": response.headers.get("content-type"),
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "*",
-                "Access-Control-Allow-Headers": "*"
-        }
+    .catch(() => {
+        return new Response('bad request', { status: 400, headers: genHeaders() })
     })
+
+    if (!response.ok) {
+        return new Response('fetch err', { status: response.status, headers: genHeaders() })
+    }
+
+    return new Response(response.body, { 
+        status: response.status, 
+        headers: genHeaders(response.headers) 
+    })
+}
+
+function genHeaders(headers = undefined) {
+    let corsHeaders  = new Headers()
+
+    corsHeaders.append('Access-Control-Allow-Origin', '*')
+    corsHeaders.append('Access-Control-Allow-Methods', '*')
+    corsHeaders.append('Access-Control-Allow-Headers', '*')
+
+    if (headers) {
+        corsHeaders.append('Content-Type', headers.get('Content-Type'))
+        corsHeaders.append('Content-Length', headers.get('Content-Length'))
+        corsHeaders.append('Cache-Control', headers.get('Cache-Control'))
+        corsHeaders.append('Refresh', headers.get('Refresh'))
+    }
+
+    return corsHeaders
 }
